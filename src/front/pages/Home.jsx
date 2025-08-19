@@ -1,6 +1,10 @@
 import React, { useEffect } from "react"
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import Banner from "../components/Banner.jsx";
+import OurCommunity from "../components/OurCommunity.jsx";
+import AboutUs from "../components/AboutUs.jsx";
+import ContactUs from "../components/ContactUs.jsx";
 
 export const Home = () => {
 
@@ -34,6 +38,7 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
+			<Banner />
 			<h1 className="display-4">Hello Rigo!!</h1>
 			<h6>Cambios en rama developer</h6>
 			<p className="lead">
@@ -48,6 +53,9 @@ export const Home = () => {
 					</span>
 				)}
 			</div>
+			<AboutUs />
+			<OurCommunity />
+			<ContactUs />
 		</div>
 	);
 }; 
