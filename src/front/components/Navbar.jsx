@@ -1,30 +1,50 @@
-import { Link } from "react-router-dom";
-import RigoBaby from "../assets/img/rigo-baby.jpg";
-import icono_light from "../assets/img/icono_light.png";
+import React from "react";
 
 export const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
-         CondoConnect
+          CondoConnect
         </a>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <div className="d-flex ms-auto align-items-center">
-            <a className="nav-link me-3 active" aria-current="page" href="#">
-              Home
-            </a>
-            <a className="nav-link me-3" href="#">
-              About
-            </a>
-            <a className="nav-link me-3" href="#">
-              Contact
-            </a>
 
-            <Link to="/login">
-              <button className="btn btn-primary">Login</button>
-            </Link>
-          </div>
+        {/* Botón hamburguesa */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* Contenido colapsable */}
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                About
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Contact
+              </a>
+            </li>
+            <li className="nav-item ms-lg-3">
+              <button className="btn btn-primary" type="button">
+                Login
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
