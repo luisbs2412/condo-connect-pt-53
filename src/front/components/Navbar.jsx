@@ -1,22 +1,52 @@
-import { Link } from "react-router-dom";
-import RigoBaby from "../assets/img/rigo-baby.jpg";
-import icono_light from "../assets/img/icono_light.png";
+import React from "react";
 
 export const Navbar = () => {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">
+          CondoConnect
+        </a>
 
-	return (
-		<nav className="navbar"  style={{"backgroundColor": "#f4f5f6"}}>
-			<div className="container">
-				<Link to="/">
-					{/* <span className="navbar-brand mb-0 h1">CondoConect</span> */}
-					<img src={icono_light}  alt="" />
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-sm btn-primary">Login</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+        {/* Botón hamburguesa */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* Contenido colapsable */}
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                About
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Contact
+              </a>
+            </li>
+            <li className="nav-item ms-lg-3">
+              <button className="btn btn-primary" type="button">
+                Login
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 };
