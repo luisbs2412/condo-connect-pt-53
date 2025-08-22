@@ -41,8 +41,8 @@ const AboutUs = () => {
                   zIndex: 2,
                   textAlign: "center"
                 }}>
-                <div>Sales</div>
-                <div>Certificate</div>
+                <div>Quality</div>
+                <div>living</div>
               </div>
             </div>
           </div>
