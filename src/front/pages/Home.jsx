@@ -37,59 +37,25 @@ export const Home = () => {
 	}, [])
 
 	return (
-        <div>
-            {/* Hero Section */}
-            <div
-                className="hero d-flex flex-column justify-content-center align-items-center text-center"
-                style={{
-                    backgroundImage: `url(${rigoImageUrl})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    height: "100vh",
-                    color: "white",
-                    position: "relative",
-                    marginTop: "0",
-                    fontFamily: "'Playfair Display', serif" // Fuente elegante
-                }}
-            >
-                <div
-                    className="overlay"
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "rgba(0,0,0,0.5)"
-                    }}
-                ></div>
-
-                <div style={{ position: "relative", zIndex: 2 }}>
-                    <h1 className="display-2 fw-bold mb-3">New York Residences</h1>
-                    <p className="lead mb-4">
-                        Exclusive luxury apartment complex offering elegant design and top-tier amenities
-                    </p>
-                    <div>
-                        <button className="btn btn-primary mx-2">Conócenos</button>
-                        <button className="btn btn-primary mx-2">Contáctanos</button>
-                    </div>
-                </div>
-            </div>
-
-          <div>
-                <div className="alert alert-info">
-                    {store.message ? (
-                        <span>{store.message}</span>
-                    ) : (
-                        <span className="text-danger">
-                            Loading message from the backend (make sure your python 🐍 backend is running)...
-                        </span>
-                    )}
-                </div>
-                <AboutUs />
-                <OurCommunity />
-                <ContactUs />
-            </div>
-        </div>
-    );
-};
+		<div className="text-center mt-5">
+			<Banner />
+			<h1 className="display-4">Hello Rigo!!</h1>
+			<h6>Cambios en rama developer</h6>
+			<p className="lead">
+				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
+			</p>
+			<div className="alert alert-info">
+				{store.message ? (
+					<span>{store.message}</span>
+				) : (
+					<span className="text-danger">
+						Loading message from the backend (make sure your python 🐍 backend is running)...
+					</span>
+				)}
+			</div>
+			<AboutUs />
+			<OurCommunity />
+			<ContactUs />
+		</div>
+	);
+}; 
