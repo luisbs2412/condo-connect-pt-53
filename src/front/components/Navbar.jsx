@@ -2,7 +2,7 @@ import React from "react";
 
 export const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
           CondoConnect
