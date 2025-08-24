@@ -5,6 +5,7 @@ import Banner from "../components/Banner.jsx";
 import OurCommunity from "../components/OurCommunity.jsx";
 import AboutUs from "../components/AboutUs.jsx";
 import ContactUs from "../components/ContactUs.jsx";
+import Tenant from "../components/Tenant.jsx";
 
 export const Home = () => {
 
@@ -55,6 +56,7 @@ export const Home = () => {
 			</div>
 			<AboutUs />
 			<OurCommunity />
+			<Tenant />
 			<ContactUs />
 		</div>
 	);
