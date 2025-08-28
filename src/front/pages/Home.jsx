@@ -40,7 +40,7 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			<Banner />
-			<h1 className="display-4">Hello Rigo!!</h1>
+			{/* <h1 className="display-4">Hello Rigo!!</h1>
 			<h6>Cambios en rama developer</h6>
 			<p className="lead">
 				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
@@ -53,10 +53,9 @@ export const Home = () => {
 						Loading message from the backend (make sure your python 🐍 backend is running)...
 					</span>
 				)}
-			</div>
+			</div> */}
 			<AboutUs />
 			<OurCommunity />
-			<Tenant />
 			<ContactUs />
 		</div>
 	);
