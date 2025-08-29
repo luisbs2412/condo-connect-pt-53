@@ -29,7 +29,7 @@ export const router = createBrowserRouter(
       <Route path="/tenant/incidents" element={<IncidentPage />} />
       <Route path="/tenant/reservations" element={<ReservationPage />} />
 
-      <Route path="/admin/incidentsList" element={<IncidentManagement />} />
+      <Route path="/admin/incidentsLits" element={<IncidentManagement />} />
       <Route path="/admin/registerTenant" element={<RegisterTenantPage />} />
 
       <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
