@@ -13,6 +13,7 @@ CORS(api)
 
 reservas = []
 
+
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -29,6 +30,8 @@ def listar_reservas():
     return jsonify(reservas), 200
 
 # POST → crear nueva reserva
+
+
 @api.route("/user/reservas", methods=["POST"])
 def crear_reserva():
     data = request.get_json()
@@ -38,8 +41,6 @@ def crear_reserva():
         "message": "Reserva creada ✅",
         "reserva": data
     }), 201
-
-
 
 
 # PUT → actualizar una reserva por id
