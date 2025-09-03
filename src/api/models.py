@@ -38,3 +38,17 @@ class Reservation(db.Model):
             "type": self.type
             # do not serialize the password, its a security breach
         }
+    
+class Tenant(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(100), nullable=False)
+    apt: Mapped[str] = mapped_column(String(50), nullable=False)
+    email: Mapped[str] = mapped_column(String(120), nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "apt": self.apt,
+            "email": self.email
+        }    

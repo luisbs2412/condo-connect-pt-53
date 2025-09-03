@@ -31,7 +31,7 @@ export const router = createBrowserRouter(
 
       <Route path="/admin/incidentsList" element={<IncidentManagement />} />
       <Route path="/admin/registerTenant" element={<RegisterTenantPage />} />
-
+      
       <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
         {/* Nested Routes: Defines sub-routes within the BaseHome component. */}

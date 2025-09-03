@@ -1,80 +1,89 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
+from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
-from flask_swagger import swagger
-from api.utils import APIException, generate_sitemap
-from api.models import db
-from api.routes import api, Bcrypt
-from api.admin import setup_admin
-from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
-# from models import Person
-
-ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
-static_file_dir = os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), '../dist/')
+# Inicializa Flask
 app = Flask(__name__)
-bcrypt = Bcrypt()
-# SECRET_KEY
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
-app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
-app.url_map.strict_slashes = False
-bcrypt.init_app(app)
-JWTManager(app)
-# database condiguration
+
+# Habilita CORS para todos los dominios y métodos (para desarrollo)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Para producción, en lugar de la línea anterior, usa esta (descomenta y ajusta tu frontend origin):
+# CORS(app, resources={r"/*": {"origins": "https://opulent-capybara-x5r54w59x64frr6-3002.app.github.dev"}})
+
+# Configuraciones básicas
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "mysecretkey")
+app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY", "jwtsecretkey")
+
+# Configuración base de datos
 db_url = os.getenv("DATABASE_URL")
-if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
-        "postgres://", "postgresql://")
+if db_url:
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-MIGRATE = Migrate(app, db, compare_type=True)
-db.init_app(app)
 
+# Inicializa extensiones
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+bcrypt = Bcrypt(app)
+jwt = JWTManager(app)
 
-# add the admin
-setup_admin(app)
+# Modelo Tenant
+class Tenant(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    apt_number = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
 
-# add the admin
-setup_commands(app)
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "apt_number": self.apt_number,
+            "email": self.email,
+        }
 
-# Add all endpoints form the API with a "api" prefix
-app.register_blueprint(api, url_prefix='/api')
+# Ruta para crear un nuevo tenant
+@app.route('/tenants', methods=['POST'])
+def create_tenant():
+    data = request.get_json()
 
-# Handle/serialize errors like a JSON object
+    # Validar campos obligatorios
+    if not data or not all(k in data for k in ('name', 'apt_number', 'email')):
+        return jsonify({'error': 'Missing required fields'}), 400
 
+    # Verificar si el email ya existe
+    if Tenant.query.filter_by(email=data['email']).first():
+        return jsonify({'error': 'Tenant with this email already exists'}), 409
 
-@app.errorhandler(APIException)
-def handle_invalid_usage(error):
-    return jsonify(error.to_dict()), error.status_code
+    # Crear y guardar el tenant
+    new_tenant = Tenant(
+        name=data['name'],
+        apt_number=data['apt_number'],
+        email=data['email']
+    )
+    db.session.add(new_tenant)
+    db.session.commit()
 
-# generate sitemap with all your endpoints
+    return jsonify(new_tenant.serialize()), 201
 
-
+# Ruta de prueba para la API
 @app.route('/')
-def sitemap():
-    if ENV == "development":
-        return generate_sitemap(app)
-    return send_from_directory(static_file_dir, 'index.html')
+def home():
+    return jsonify({"message": "API is running"})
 
-# any other endpoint will try to serve it like a static file
-@app.route('/<path:path>', methods=['GET'])
-def serve_any_other_file(path):
-    if not os.path.isfile(os.path.join(static_file_dir, path)):
-        path = 'index.html'
-    response = send_from_directory(static_file_dir, path)
-    response.cache_control.max_age = 0  # avoid cache memory
-    return response
+# Servir archivos estáticos (por ejemplo React build)
+static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../dist/')
+@app.route('/<path:path>')
+def static_proxy(path):
+    return send_from_directory(static_file_dir, path)
 
-
-# this only runs if `$ python src/main.py` is executed
+# Ejecutar la app
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3001))
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.getenv("PORT", 3001)))
