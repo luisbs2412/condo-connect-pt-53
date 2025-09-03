@@ -4,15 +4,15 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
+from flask_bcrypt import Bcrypt
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
 from api.models import db
-from api.routes import api
+from api.routes import api, Bcrypt
 from api.admin import setup_admin
 from api.commands import setup_commands
-from flask_cors import CORS
-from flask_admin.contrib.sqla import ModelView
-from api.models import db, Incident
+from flask_jwt_extended import JWTManager
+
 
 #def setup_admin(app):
     #from flask_admin import Admin
@@ -30,9 +30,19 @@ static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../
 
 # Crear app
 app = Flask(__name__)
+bcrypt = Bcrypt()
+# SECRET_KEY
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
 app.url_map.strict_slashes = False
 
+
 # Configuración DB
+
+bcrypt.init_app(app)
+JWTManager(app)
+# database condiguration
+
 db_url = os.getenv("DATABASE_URL")
 if db_url:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
@@ -45,8 +55,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
-# CORS
-CORS(app)
+
+
+# add the admin
+setup_admin(app)
+
 
 # Admin
 setup_admin(app)
