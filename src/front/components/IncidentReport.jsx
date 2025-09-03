@@ -1,51 +1,138 @@
-import React from 'react'
+import React, { useState } from "react";
+import { Alert } from "./Alert";
 
 const IncidentReport = () => {
-    return (
-        <div>
-            {/* Add your incident report form or content here */}
-            <form className="row g-3">
-                <div className="col-md-6">
-                    <label htmlFor="inputPassword4" className="form-label"><strong>Name: </strong>*</label>
-                    <input type="text" className="form-control" id="inputPassword4" placeholder="Full Name:" />
-                </div>
-                <div className="col-md-6">
-                    <label htmlFor="inputEmail4" className="form-label"><strong>Email: </strong>*</label>
-                    <input type="email" className="form-control" id="inputEmail4" placeholder="Email Address:" />
-                </div>
-                <div className="col-md-6">
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option1" />
-                        <label className="form-check-label" for="inlineCheckbox2">Plumbing</label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
-                        <label className="form-check-label" for="inlineCheckbox2">Electrical</label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option3" />
-                        <label className="form-check-label" for="inlineCheckbox2">General</label>
-                    </div>
-                </div>
-                <div className="col-md-6">
-                    <label htmlFor="inputEmail4" className="form-label"><strong>Apartment #: </strong></label>
-                    <input type="email" className="form-control" id="inputEmail4" placeholder="Apartment Number:" />
-                </div>
-                <div className="col-12">
-                    <label htmlFor="inputAddress" className="form-label"><strong>Subject:</strong></label>
-                    <input type="text" className="form-control" id="inputAddress" placeholder="Subject:" />
-                </div>
-                <div className="mb-3 col-12">
-                    <label htmlFor="exampleFormControlTextarea1" className="form-label"><strong>Message: </strong>*</label>
-                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Explain the issue:"></textarea>
-                    <p>*Required Fields</p>
-                </div>
-                <div className="col-12 text-center">
-                    <button type="submit" className="btn btn-secondary"><strong>Send Report</strong></button>
-                </div>
-            </form>
-        </div>
-    )
-}
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [apartment, setApartment] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-export default IncidentReport
+  // Mensajes de error/éxito
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setError("");
+    setSuccess("");
+
+    // Validaciones
+    if (!name || !email || !title || !description) {
+      setError("Por favor, completa todos los campos obligatorios (*).");
+      return;
+    }
+
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      setError("El email no es válido.");
+      return;
+    }
+
+    const incident = { name, email, apartment, title, description };
+
+    try {
+      const res = await fetch("https://opulent-umbrella-4j6wv99wjpp4fj457-3001.app.github.dev/api/report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(incident),
+      });
+
+      if (!res.ok) throw new Error("Error al enviar al backend");
+
+      const data = await res.json();
+      console.log("Respuesta del backend:", data);
+      setSuccess("Reporte enviado con éxito ✅");
+
+      // Limpiar formulario
+      setName("");
+      setEmail("");
+      setApartment("");
+      setTitle("");
+      setDescription("");
+    } catch (err) {
+      console.error(err);
+      setError("Error al enviar el reporte ❌");
+    }
+  };
+
+  return (
+    <>
+      <div className="container mt-4">
+        <h3 className="mb-3">Reportar Nueva Incidencia</h3>
+
+        {/* Mensajes de error o éxito */}
+        <Alert type="error" message={error} />
+        <Alert type="success" message={success} />
+
+        <form className="row g-3" onSubmit={handleSubmit}>
+          <div className="col-md-6">
+            <label className="form-label"><strong>Name: </strong>*</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Full Name:"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label"><strong>Email: </strong>*</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Email Address:"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label"><strong>Apartment #: </strong></label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Apartment Number:"
+              value={apartment}
+              onChange={(e) => setApartment(e.target.value)}
+            />
+          </div>
+
+          <div className="col-12">
+            <label className="form-label"><strong>Título: </strong>*</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Subject:"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-3 col-12">
+            <label className="form-label"><strong>Description: </strong>*</label>
+            <textarea
+              className="form-control"
+              rows="3"
+              placeholder="Explain the issue:"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+            <p>*Required Fields</p>
+          </div>
+
+          <div className="col-12 text-center">
+            <button type="submit" className="btn btn-secondary">
+              <strong>Send Report</strong>
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default IncidentReport;

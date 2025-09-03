@@ -1,5 +1,5 @@
 import React from 'react'
-import IncidentReport from '../../components/IncidentReport.jsx';
+import IncidentReport  from '../../components/IncidentReport.jsx';
 
 export const IncidentPage = () => {
     return (
