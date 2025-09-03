@@ -51,7 +51,6 @@ export const IncidentManagement = () => {
                 ))}
               </tbody>
             </table>
-            <IncidentList />
           </div>
         </div>
       </div>
