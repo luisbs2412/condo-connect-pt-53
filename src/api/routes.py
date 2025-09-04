@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Incident
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -81,3 +81,35 @@ def login_user():
     
     access_token = create_access_token(identity=email)
     return jsonify({"token": access_token, "user": user.serialize(), "role": user.role }), 200
+
+# Endpoint para recibir el formulario
+@api.route("/report", methods=['POST'])
+def report_incidence():
+    data = request.json
+    print("Datos recibidos:", data)
+
+    try:
+        # Crear una nueva instancia del modelo Incident
+        new_incident = Incident(
+            name=data.get("name"),
+            email=data.get("email"),
+            apartment=data.get("apartment"),
+            title=data.get("title"),
+            description=data.get("description")
+        )
+
+        # Guardar en la base de datos
+        db.session.add(new_incident)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Reporte guardado exitosamente",
+            "incident": new_incident.serialize()
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            "message": "Error al guardar el reporte",
+            "error": str(e)
+        }), 500
