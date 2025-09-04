@@ -31,10 +31,32 @@ class Reservation(db.Model):
     type:Mapped[str]=mapped_column(unique=True, nullable = False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
 
+
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
             "type": self.type
             # do not serialize the password, its a security breach
+        }
+    
+class Incident(db.Model):
+    id:Mapped[int]= mapped_column(primary_key=True)
+    name:Mapped[str]= mapped_column(String(120), nullable=False)
+    email:Mapped[str]= mapped_column(String(120), nullable=False)
+    apartment:Mapped[int]= mapped_column(String(50), nullable=False)
+    title:Mapped[str]= mapped_column(String(120), nullable=False)
+    description:Mapped[str]= mapped_column(String(250), nullable=False)
+
+    def __repr__(self):
+        return f"<Incident {self.title}>"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "apartment": self.apartment,
+            "title": self.title,
+            "description": self.description,
         }
