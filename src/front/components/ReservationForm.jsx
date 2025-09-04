@@ -1,83 +1,256 @@
-import React from 'react'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const ReservationForm = () => {
-    return (
-         <form className="row g-3">
-                <div className="col-md-6">
-                  <label htmlFor="inputPassword4" className="form-label"><strong>Name: </strong>*</label>
-                  <input type="text" className="form-control" id="inputPassword4" placeholder="Full Name:" />
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="inputEmail4" className="form-label"><strong>Email: </strong>*</label>
-                  <input type="email" className="form-control" id="inputEmail4" placeholder="Email Address:" />
-                </div>
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const navigate = useNavigate();
+  const { store, dispatch } = useGlobalReducer();
 
-                <div className="col-md-6 mb-3">
-                  <div className="form-check form-check">
-                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option1" />
-                    <label className="form-check-label" for="inlineCheckbox2">Gym</label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
-                    <label className="form-check-label" for="inlineCheckbox2">Parking</label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option3" />
-                    <label className="form-check-label" for="inlineCheckbox2">BBQ and Grill</label>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="inputEmail4" className="form-label"><strong>Apartment #: </strong></label>
-                  <input type="email" className="form-control" id="inputEmail4" placeholder="Apartment Number:" />
-                </div>
+  const [user, setUser] = useState({
+    full_name: "",
+    email: "",
+    phone: "",
+    apartment: "",
+    textarea: "",
+    gym_date: "",
+    gym_time: "",
+    packing_date: "",
+    packing_time: "",
+    parking_spot: "",
+  });
 
-                <div className="row">
-                  <div className="col-md-6 mb-4">
-                    <div>
-                      <select className="form-select" required aria-label="select example">
-                        <option value="">Select Day:</option>
-                        <option value="1">Monday</option>
-                        <option value="2">Tuesday</option>
-                        <option value="3">Wednesday</option>
-                        <option value="4">Thursday</option>
-                        <option value="5">Friday</option>
-                        <option value="6">Saturday</option>
-                        <option value="7">Sunday</option>
-                      </select>
-                      <div className="invalid-feedback">Please select a day.</div>
-                    </div>
-                  </div>
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
 
-                  {/* Columna de radio buttons */}
-                  <div className="col-md-6">
-                    <div className="mb-1">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                        <label className="form-check-label" htmlFor="flexRadioDefault1">
-                          Morning (7am - 1pm)
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-                        <label className="form-check-label" htmlFor="flexRadioDefault2">
-                          Afternoon (1pm - 8pm)
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+  const handleSubmit = (event, tipo) => {
+  event.preventDefault();
 
-                <div className="mb-3 col-12">
-                  <label htmlFor="exampleFormControlTextarea2" className="form-label"><strong>Message Request: </strong></label>
-                  <textarea className="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="Any special request:"></textarea>
-                  <p>*Required Fields</p>
-                </div>
-                <div className="col-12 text-center">
-                  <button type="submit" className="btn btn-secondary"><strong>Reserve Now</strong></button>
-                </div>
-              </form>
-    )
-}
+   const hora = `${user.gym_date}T${user.gym_time}:00`;
 
-export default ReservationForm
+  const nuevaReserva = {
+    first_name: user.full_name,
+    type: tipo,
+    email: user.email,
+    phone: user.phone,
+    apartment: user.apartment,
+    description: user.textarea,
+    hora: hora
+  };
+
+  // Enviar al backend
+  fetch(`${backendUrl}api/user/reserva`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(nuevaReserva),
+  })
+    .then((res) => {
+      if (!res.ok) throw Error("Error al crear la reserva");
+      return res.json();
+    })
+    .then((data) => {
+      console.log("Reserva creada:", data);
+
+      // Guardar en estado global si aplica
+      dispatch({
+        type: "addReservaGym",
+        payload: data,
+      });
+
+      navigate("/"); // redirige al home
+    })
+    .catch((error) => {
+      console.error("Hubo un error:", error);
+      alert("No se pudo crear la reserva");
+    });
+};
+  // ... el renderForm y el return se mantienen igual
+  const renderForm = (tipo) => (
+    <form onSubmit={(e) => handleSubmit(e, tipo)}>
+      <div className="row">
+        <div className="col-md-6 mb-3">
+          <label className="form-label"># Full Name</label>
+          <input
+            onChange={handleChange}
+            type="text"
+            name="full_name"
+            className="form-control"
+            required
+            value={user.full_name}
+          />
+        </div>
+
+        <div className="col-md-6 mb-3">
+          <label className="form-label"># Email</label>
+          <input
+            onChange={handleChange}
+            type="email"
+            name="email"
+            className="form-control"
+            required
+            value={user.email}
+          />
+        </div>
+
+        <div className="col-md-6 mb-3">
+          <label className="form-label">Phone</label>
+          <input
+            onChange={handleChange}
+            type="number"
+            name="phone"
+            className="form-control"
+            required
+            value={user.phone}
+          />
+        </div>
+
+        <div className="col-md-6 mb-3">
+          <label className="form-label">Apartment</label>
+          <input
+            onChange={handleChange}
+            type="number"
+            name="apartment"
+            className="form-control"
+            value={user.address}
+          />
+        </div>
+
+        {tipo === "Gym" && (
+          <>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Fecha</label>
+              <input
+                onChange={handleChange}
+                type="date"
+                name="gym_date"
+                className="form-control"
+                value={user.gym_date}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Hora</label>
+              <input
+                onChange={handleChange}
+                type="time"
+                name="gym_time"
+                className="form-control"
+                value={user.gym_time}
+              />
+            </div>
+          </>
+        )}
+
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
+            Description
+          </label>
+          <textarea
+            onChange={handleChange}
+            className="form-control"
+            name="textarea"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            value={user.textarea}
+          ></textarea>
+        </div>
+
+        <button type="submit" className="btn btn-primary">
+          Enviar Reserva {tipo}
+        </button>
+      </div>
+    </form>
+  );
+
+  return (
+    <div className="container mt-4">
+      <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li className="nav-item" role="presentation">
+          <button
+            className="nav-link active"
+            id="pills-gym-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-gym"
+            type="button"
+            role="tab"
+            aria-controls="pills-gym"
+            aria-selected="true"
+          >
+            Gym
+          </button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className="nav-link"
+            id="pills-packing-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-packing"
+            type="button"
+            role="tab"
+            aria-controls="pills-packing"
+            aria-selected="false"
+          >
+            Packing
+          </button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className="nav-link"
+            id="pills-bbq-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-bbq"
+            type="button"
+            role="tab"
+            aria-controls="pills-bbq"
+            aria-selected="false"
+          >
+            BBQ
+          </button>
+        </li>
+      </ul>
+
+      <div className="tab-content" id="pills-tabContent">
+        <div
+          className="tab-pane fade show active"
+          id="pills-gym"
+          role="tabpanel"
+          aria-labelledby="pills-gym-tab"
+          tabIndex="0"
+        >
+          <h2>Gym Reservation</h2>
+          {renderForm("Gym")}
+        </div>
+
+        <div
+          className="tab-pane fade"
+          id="pills-packing"
+          role="tabpanel"
+          aria-labelledby="pills-packing-tab"
+          tabIndex="0"
+        >
+          <h2>Packing Reservation</h2>
+          {renderForm("Packing")}
+        </div>
+
+        <div
+          className="tab-pane fade"
+          id="pills-bbq"
+          role="tabpanel"
+          aria-labelledby="pills-bbq-tab"
+          tabIndex="0"
+        >
+          <h2>BBQ Reservation</h2>
+          {renderForm("BBQ")}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ReservationForm;
