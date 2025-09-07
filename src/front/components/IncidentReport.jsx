@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Alert } from "../components/Alert.jsx";
+import { useNavigate } from "react-router-dom";
 
 const IncidentReport = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [apartment, setApartment] = useState("");
@@ -52,11 +54,14 @@ const IncidentReport = () => {
       setApartment("");
       setTitle("");
       setDescription("");
+      navigate("/admin/incidentsList");
     } catch (err) {
       console.error(err);
       setError("Error al enviar el reporte ❌");
     }
   };
+  
+
 
   return (
     <>
