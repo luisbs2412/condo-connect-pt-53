@@ -209,10 +209,3 @@ def eliminar_reserva(id):
     global reservas
     reservas = [r for r in reservas if r["id"] != id]
     return jsonify({"message": "Reserva eliminada ✅"}), 200
-
-
-# Nuevo endpoint para listar incidencias
-@api.route("/incidents", methods=['GET'])
-def get_incidents():
-    incidents = Incident.query.all()
-    return jsonify([incident.serialize() for incident in incidents]), 200
