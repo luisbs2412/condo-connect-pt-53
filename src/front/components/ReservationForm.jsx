@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const ReservationForm = () => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer();
 
@@ -13,11 +13,17 @@ const ReservationForm = () => {
     phone: "",
     apartment: "",
     textarea: "",
+    // Gym
     gym_date: "",
     gym_time: "",
+    // Packing
     packing_date: "",
     packing_time: "",
-    parking_spot: "",
+    reservationpacking: "",
+    // BBQ
+    reservationbbq: "",
+    bbq_date: "",
+    bbq_time: "",
   });
 
   const handleChange = (event) => {
@@ -29,52 +35,72 @@ const ReservationForm = () => {
   };
 
   const handleSubmit = (event, tipo) => {
-  event.preventDefault();
+    event.preventDefault();
 
-   const hora = `${user.gym_date}T${user.gym_time}:00`;
+    let hora = null;
 
-  const nuevaReserva = {
-    first_name: user.full_name,
-    type: tipo,
-    email: user.email,
-    phone: user.phone,
-    apartment: user.apartment,
-    description: user.textarea,
-    hora: hora
+    if (tipo === "Gym") {
+      hora = `${user.gym_date}T${user.gym_time}:00`;
+    } else if (tipo === "Packing") {
+      hora = `${user.packing_date}T${user.packing_time}:00`;
+    } else if (tipo === "BBQ") {
+      hora = `${user.bbq_date}T${user.bbq_time}:00`;
+    }
+
+    const nuevaReserva = {
+      first_name: user.full_name,
+      type: tipo,
+      email: user.email,
+      phone: user.phone,
+      apartment: user.apartment,
+      description: user.textarea,
+      hora,
+      reservationpacking: user.reservationpacking,
+      reservationbbq: user.reservationbbq,
+    };
+
+    // Enviar al backend
+    fetch(`${backendUrl}api/user/reserva`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevaReserva),
+    })
+      .then((res) => {
+        if (!res.ok) throw Error("Error al crear la reserva");
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Reserva creada:", data);
+        alert("Reserva creada con exito");
+
+        // acción dinámica
+        const actionType =
+          tipo === "Gym"
+            ? "addReservaGym"
+            : tipo === "Packing"
+              ? "addReservaPacking"
+              : "addReservaBBQ";
+
+        dispatch({
+          type: actionType,
+          payload: data,
+        });
+
+        navigate("/"); // redirige al home
+      })
+      .catch((error) => {
+        console.error("Hubo un error:", error);
+        alert("No se pudo crear la reserva");
+      });
   };
 
-  // Enviar al backend
-  fetch(`${backendUrl}api/user/reserva`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(nuevaReserva),
-  })
-    .then((res) => {
-      if (!res.ok) throw Error("Error al crear la reserva");
-      return res.json();
-    })
-    .then((data) => {
-      console.log("Reserva creada:", data);
-
-      // Guardar en estado global si aplica
-      dispatch({
-        type: "addReservaGym",
-        payload: data,
-      });
-
-      navigate("/"); // redirige al home
-    })
-    .catch((error) => {
-      console.error("Hubo un error:", error);
-      alert("No se pudo crear la reserva");
-    });
-};
-  // ... el renderForm y el return se mantienen igual
+  // Render dinámico
   const renderForm = (tipo) => (
     <form onSubmit={(e) => handleSubmit(e, tipo)}>
       <div className="row">
+        {/* Datos comunes */}
         <div className="col-md-6 mb-3">
           <label className="form-label"># Full Name</label>
           <input
@@ -118,14 +144,15 @@ const ReservationForm = () => {
             type="number"
             name="apartment"
             className="form-control"
-            value={user.address}
+            value={user.apartment}
           />
         </div>
 
+        {/* Gym */}
         {tipo === "Gym" && (
           <>
             <div className="col-md-6 mb-3">
-              <label className="form-label">Fecha</label>
+              <label className="form-label">Date</label>
               <input
                 onChange={handleChange}
                 type="date"
@@ -135,7 +162,7 @@ const ReservationForm = () => {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label className="form-label">Hora</label>
+              <label className="form-label">Time</label>
               <input
                 onChange={handleChange}
                 type="time"
@@ -147,6 +174,79 @@ const ReservationForm = () => {
           </>
         )}
 
+        {/* Packing */}
+        {tipo === "Packing" && (
+          <>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Packing Spot</label>
+              <input
+                onChange={handleChange}
+                type="number"
+                name="reservationpacking"
+                className="form-control"
+                value={user.reservationpacking}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Date</label>
+              <input
+                onChange={handleChange}
+                type="date"
+                name="packing_date"
+                className="form-control"
+                value={user.packing_date}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Time</label>
+              <input
+                onChange={handleChange}
+                type="time"
+                name="packing_time"
+                className="form-control"
+                value={user.packing_time}
+              />
+            </div>
+          </>
+        )}
+
+        {/* BBQ */}
+        {tipo === "BBQ" && (
+          <>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">BBQ Spot</label>
+              <input
+                onChange={handleChange}
+                type="number"
+                name="reservationbbq"
+                className="form-control"
+                value={user.reservationbbq}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Date</label>
+              <input
+                onChange={handleChange}
+                type="date"
+                name="bbq_date"
+                className="form-control"
+                value={user.bbq_date}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Time</label>
+              <input
+                onChange={handleChange}
+                type="time"
+                name="bbq_time"
+                className="form-control"
+                value={user.bbq_time}
+              />
+            </div>
+          </>
+        )}
+
+        {/* Descripción */}
         <div className="mb-3">
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Description

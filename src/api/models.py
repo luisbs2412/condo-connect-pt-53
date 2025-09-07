@@ -36,6 +36,8 @@ class Reservation(db.Model):
  description: Mapped[str] = mapped_column(String(250), nullable=True)
  phone: Mapped[str] = mapped_column(String(20), nullable=True) 
  hora: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
+ reservationpacking: Mapped[str] = mapped_column(String(50), nullable=True)
+ reservationbbq: Mapped[str] = mapped_column(String(50), nullable=True)
  
 
  def serialize(self):
@@ -46,7 +48,9 @@ class Reservation(db.Model):
          "phone": self.phone,
          "apartment": self.apartment,
          "description": self.description,
-         "hora": self.hora.strftime("%Y-%m-%dT%H:%M:%S") # solo hora en formato HH:MM:SS
+         "hora": self.hora.strftime("%Y-%m-%dT%H:%M:%S"), # solo hora en formato HH:MM:SS
+         "reservationpacking": self.reservationpacking,
+         "reservationbbq": self.reservationbbq
      }
     
 class Incident(db.Model):
