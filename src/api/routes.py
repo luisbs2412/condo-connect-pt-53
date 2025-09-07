@@ -148,6 +148,9 @@ def crear_reserva():
     apartment = data.get("apartment")
     description = data.get("description")
     hora = data.get("hora")
+    reservationpacking = data.get("reservationpacking")
+    reservationbbq= data.get("reservationbbq")
+
 
     # Validaciones simples
     if not first_name or not type or not email or not phone:
@@ -169,7 +172,9 @@ def crear_reserva():
         phone=phone,
         apartment=apartment,
         description=description,
-        hora=hora
+        hora=hora,
+        reservationpacking=reservationpacking,
+        reservationbbq=reservationbbq,
     )
 
     db.session.add(nueva_reserva)
