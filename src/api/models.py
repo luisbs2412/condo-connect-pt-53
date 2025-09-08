@@ -14,6 +14,8 @@ class User(db.Model):
     last_name: Mapped[str] = mapped_column(String(50), nullable=False)
     role: Mapped[str] = mapped_column(String(20), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
+    apartment = db.Column(db.String(120), nullable=True)
+
 
 
 
@@ -23,7 +25,8 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "role": self.role
+            "role": self.role,
+            "apartment": self.apartment
             # do not serialize the password, its a security breach
         }
     

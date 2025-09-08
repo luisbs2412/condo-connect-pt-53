@@ -32,12 +32,12 @@ def handle_hello():
 @api.route('/user/register', methods=['POST'])
 def create_user():
     email = request.json.get('email')
-    if email is not None:
-        user = User.query.filter_by(email=email).first()
-        if user:
-            return "User already exists", 400
-    else:
+    if email is None:
         return 'Email is required', 400
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return "User already exists", 400
 
     password = request.json.get('password')
     if password is None:
@@ -45,18 +45,20 @@ def create_user():
     elif len(password) < 8:
         return 'Password should be max 8 characters long', 400
 
+    # No validamos los demás campos, pueden venir vacíos o no venir
     first_name = request.json.get('first_name')
     last_name = request.json.get('last_name')
+    apartment = request.json.get('apartment')
     role = request.json.get('role')
-
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    password = request.json.get('password')
 
     new_user = User(
         email=email,
-        password=hashed_password,
+        password=password,
         first_name=first_name,
         last_name=last_name,
         role=role,
+        apartment=apartment,
         is_active=True
     )
     db.session.add(new_user)
@@ -204,7 +206,7 @@ def actualizar_reserva(id):
 # DELETE → eliminar una reserva por id
 
 
-@api.route("/api/reservas/<int:id>", methods=["DELETE"])
+@api.route("/user/reservas/<int:id>", methods=["DELETE"])
 def eliminar_reserva(id):
     global reservas
     reservas = [r for r in reservas if r["id"] != id]
