@@ -4,7 +4,7 @@ import image from "../assets/img/image.webp"; // Adjust the path as necessary
 const AboutUs = () => {
   return (
     <>
-      <section className="bg-light py-5">
+      <section id="About" className="bg-light py-5">
         <div className="container">
           <div className="row" style={{ display: "flex", textAlign: "justify" }}>
             <div className="col">
