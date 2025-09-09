@@ -34,7 +34,7 @@ export const RegisterTenantPage = () => {
       first_name: firstName,
       last_name: lastName,
       apartment: apartment,      // Nuevo campo enviado
-      role: "tenant"
+      role: "Tenant"
     };
 
     try {

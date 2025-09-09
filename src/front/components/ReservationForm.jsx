@@ -88,7 +88,7 @@ const ReservationForm = () => {
           payload: data,
         });
 
-        navigate("/"); // redirige al home
+        navigate("#"); // redirige al home
       })
       .catch((error) => {
         console.error("Hubo un error:", error);

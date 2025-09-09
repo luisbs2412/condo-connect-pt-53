@@ -6,6 +6,8 @@ const IncidentReport = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [apartment, setApartment] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   // Mensajes de error/éxito
   const [error, setError] = useState("");
@@ -18,7 +20,7 @@ const IncidentReport = () => {
     setSuccess("");
 
     // Validaciones
-    if (!name || !email || !apartment) {
+    if (!name || !email || !apartment || !title || !description) {
       setError("Por favor, completa todos los campos obligatorios (*).");
       return;
     }
@@ -29,10 +31,10 @@ const IncidentReport = () => {
       return;
     }
 
-    const user = { name, email, apartment};
+    const user = { name, email, apartment, title, description };
 
     try {
-      const res = await fetch(`${backendUrl}api/user`, {
+      const res = await fetch(`${backendUrl}api/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
@@ -48,6 +50,8 @@ const IncidentReport = () => {
       setName("");
       setEmail("");
       setApartment("");
+      setTitle("");
+      setDescription("");
     } catch (err) {
       console.error(err);
       setError("Error al enviar el reporte ❌");

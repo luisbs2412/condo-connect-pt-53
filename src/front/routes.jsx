@@ -7,14 +7,13 @@ import {
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
-import { Single } from "./pages/Single";
-import { Demo } from "./pages/Demo";
-import OperationsForm from "./pages/tenant/OperationsForm";
 import { IncidentPage } from "./pages/tenant/IncidentPage";
 import { ReservationPage } from "./pages/tenant/ReservationPage";
 import { IncidentManagement } from "./pages/admin/IncidentManagement";
 import { RegisterTenantPage } from "./pages/admin/RegisterTenantPage";
-
+import PrivateRoute from "./components/PrivateRoute";
+import { PrivateLayout } from './pages/PrivateLayout';
+import WelcomePage from "./pages/WelcomePage";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,19 +24,37 @@ export const router = createBrowserRouter(
     // Note: The child paths of the Layout element replace the Outlet component with the elements contained in the "element" attribute of these child paths.
     // Root Route: All navigation will start from here.
     <>
-      <Route path="/tenant/operationsform" element={<OperationsForm />} />
-      <Route path="/tenant/incidents" element={<IncidentPage />} />
-      <Route path="/tenant/reservations" element={<ReservationPage />} />
+      <Route element={
+      <PrivateRoute allowedRoles={['Admin', 'Tenant']} >
+        <PrivateLayout />
+      </PrivateRoute>
+      }>
+      
+      {/* Proteger Rutas de Tenant */}   
+      <Route path="/tenant" element={<PrivateRoute allowedRoles={['Tenant']} >
+        <WelcomePage/>
+      </PrivateRoute>} />
+      <Route path="/tenant/incidents" element={<PrivateRoute allowedRoles={['Tenant']} >
+        <IncidentPage />
+      </PrivateRoute>} />
+      <Route path="/tenant/reservations" element={<PrivateRoute allowedRoles={['Tenant']} >
+        <ReservationPage />
+      </PrivateRoute>} />
 
-      <Route path="/admin/incidentsList" element={<IncidentManagement />} />
-      <Route path="/admin/registerTenant" element={<RegisterTenantPage />} />
+      {/* Proteger Rutas de Admin */}
+
+      <Route path="/admin/incidentsList" element={<PrivateRoute allowedRoles={['Admin']} >
+        <IncidentManagement />
+      </PrivateRoute>} />
+      <Route path="/admin/registerTenant" element={<PrivateRoute allowedRoles={['Admin']} >
+        <RegisterTenantPage />
+      </PrivateRoute>} />
+      </Route>
 
       <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
         {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
         <Route path="/" element={<Home />} />
-        <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
-        <Route path="/demo" element={<Demo />} />
       </Route>
     </>
   )

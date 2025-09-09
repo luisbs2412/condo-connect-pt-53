@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const OurCommunity = () => {
   return (
-    <div className="container py-5">
+    <section id="OurComunity" className="container py-5">
       {/* Encabezado */}
       <div className="text-center mb-5">
         <h2 className="fw-bold">Servicios de CondoCommunity</h2>
@@ -147,7 +147,7 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

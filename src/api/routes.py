@@ -45,16 +45,17 @@ def create_user():
     elif len(password) < 8:
         return 'Password should be max 8 characters long', 400
 
-    # No validamos los demás campos, pueden venir vacíos o no venir
     first_name = request.json.get('first_name')
     last_name = request.json.get('last_name')
     apartment = request.json.get('apartment')
     role = request.json.get('role')
     password = request.json.get('password')
 
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
     new_user = User(
         email=email,
-        password=password,
+        password=hashed_password,
         first_name=first_name,
         last_name=last_name,
         role=role,
