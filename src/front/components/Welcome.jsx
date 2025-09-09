@@ -1,0 +1,40 @@
+import React from 'react';
+import useGlobalReducer from '../hooks/useGlobalReducer'; // Ajusta la ruta si es necesario
+
+const Welcome = () => {
+  // Accede al estado global directamente desde el componente
+  const { store } = useGlobalReducer();
+  const userName = store.user.user?.first_name; // Usa encadenamiento opcional para evitar errores
+
+  // Si no hay nombre de usuario, no renderiza nada
+  if (!userName) {
+    return null;
+  }
+
+  const currentHour = new Date().getHours();
+  let greeting;
+
+
+  if (currentHour >= 5 && currentHour < 12) {
+    greeting = 'Good morning';
+  } else if (currentHour >= 12 && currentHour < 19) {
+    greeting = 'Good afternoon';
+  } else {
+    greeting = 'Good night';
+  }
+
+  return (
+    <div>
+      <p>{greeting}, {userName}.</p>
+      
+      
+        <div>
+          <h2 className="text-center">Welcome to CondoConnect!</h2>
+          <p className="text-center">Your portal for managing and reporting condominium issues efficiently.</p> 
+        </div>
+
+    </div>
+  );
+};
+
+export default Welcome;
