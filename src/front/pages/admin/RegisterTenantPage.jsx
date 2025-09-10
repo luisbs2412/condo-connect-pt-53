@@ -18,22 +18,22 @@ export const RegisterTenantPage = () => {
     setSuccess("");
 
     if (!firstName || !lastName || !email || !apartment) {
-      setError("Por favor, completa todos los campos obligatorios (*).");
+      setError("All required fields must be completed (*).");
       return;
     }
 
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(email)) {
-      setError("El email no es válido.");
+      setError("Invalid Email.");
       return;
     }
 
     const tenant = {
       email,
-      password: "12345678",      // Contraseña dummy requerida por backend
+      password: "12345678",      
       first_name: firstName,
       last_name: lastName,
-      apartment: apartment,      // Nuevo campo enviado
+      apartment: apartment,      
       role: "tenant"
     };
 
@@ -49,24 +49,24 @@ export const RegisterTenantPage = () => {
         throw new Error(errorText);
       }
 
-      setSuccess("Tenant creado con éxito ✅");
+      setSuccess("Tenant created succesfully ✅");
       setFirstName("");
       setLastName("");
       setEmail("");
       setApartment("");
     } catch (err) {
       console.error(err);
-      setError("Error al crear Tenant ❌: " + err.message);
+      setError("Error creating Tenant ❌: " + err.message);
     }
   };
 
   return (
     <div className="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light py-4">
-      <h1 className="display-5 fw-bold mb-4 text-dark text-center">Admin Portal</h1>
+      <h1 className="display-5 fw-bold mb-4 text-dark text-center">Onboarding Form</h1>
 
       <div className="card shadow-lg rounded-4 p-3 p-md-4 w-100" style={{ maxWidth: "500px" }}>
         <div className="card-body text-center">
-          <h2 className="h4 fw-semibold text-secondary mb-4">Datos del Inquilino</h2>
+          <h2 className="h4 fw-semibold text-secondary mb-4">Tenant Information </h2>
 
           {error && <div className="alert alert-danger">{error}</div>}
           {success && <div className="alert alert-success">{success}</div>}
@@ -74,28 +74,28 @@ export const RegisterTenantPage = () => {
           <div className="mb-4">
             <input
               type="text"
-              placeholder="Nombre"
+              placeholder="Name *"
               className="form-control form-control-lg mb-3"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Apellido"
+              placeholder="Last Name *"
               className="form-control form-control-lg mb-3"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Número de APT"
+              placeholder="Apartment Number *"
               className="form-control form-control-lg mb-3"
               value={apartment}
               onChange={(e) => setApartment(e.target.value)}
             />
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Email *"
               className="form-control form-control-lg"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -104,9 +104,8 @@ export const RegisterTenantPage = () => {
 
           <div className="d-grid gap-3 d-md-flex justify-content-md-center">
             <button className="btn btn-primary btn-lg shadow w-100 w-md-50" onClick={handleSubmit}>
-              Crear Perfil
+              Create Profile
             </button>
-            <button className="btn btn-danger btn-lg shadow w-100 w-md-50">Logout</button>
           </div>
         </div>
       </div>

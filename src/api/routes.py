@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from flask import Flask, logging, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, Incident, Reservation
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -57,28 +57,29 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
 
-    # Enviar correo de bienvenida
+    # Sending Welcome Email
     try:
         mail = Mail(current_app)
         msg = Message(
-            subject="🎉 Bienvenido al portal del edificio",
+            subject=" Bienvenido al portal del edificio",
             recipients=[email]
         )
         msg.html = f"""
-        <h2>Hola {first_name},</h2>
-        <p>Tu cuenta ha sido registrada exitosamente en el portal del edificio New York Residences.</p>
-        <p>Tu contraseña temporal es: <strong>12345678</strong></p>
-        <p>Por favor, inicia sesión y cámbiala lo antes posible.</p>
-        <br/>
-        <p>Gracias,</p>
-        <p><em>Equipo de Administración Condo Connect</em></p>
-        """
+             <h2>Hello {first_name},</h2>
+             <p>Your account has been successfully registered in the New York Residences portal.</p>
+             <p>Your temporary password is: <strong>12345678</strong></p>
+             <p>Please log in and change it as soon as possible.</p>
+             <br/>
+             <p>Thank you,</p>
+             <p><em>Condo Connect Administration Team</em></p>
+             """
         mail.send(msg)
-        print(f"Correo enviado a {email}")
-    except Exception as e:
-        print(f"Error al enviar correo: {e}")
 
-    return 'User created and email sent ✅', 200
+    except Exception as e:
+        
+        logging.error(f"Failure sending the email: {e}")
+
+    return 'User created and email sent', 200
 
 
 @api.route('/user/login', methods=['POST'])
