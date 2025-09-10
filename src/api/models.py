@@ -63,6 +63,7 @@ class Incident(db.Model):
     apartment:Mapped[int]= mapped_column(String(50), nullable=False)
     title:Mapped[str]= mapped_column(String(120), nullable=False)
     description:Mapped[str]= mapped_column(String(250), nullable=False)
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="new")
 
     def __repr__(self):
         return f"<Incident {self.title}>"
@@ -75,4 +76,5 @@ class Incident(db.Model):
             "apartment": self.apartment,
             "title": self.title,
             "description": self.description,
+            "status": self.status
         }
