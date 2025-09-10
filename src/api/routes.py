@@ -45,7 +45,6 @@ def create_user():
     elif len(password) < 8:
         return 'Password should be max 8 characters long', 400
 
-    # No validamos los demás campos, pueden venir vacíos o no venir
     first_name = request.json.get('first_name')
     last_name = request.json.get('last_name')
     apartment = request.json.get('apartment')
@@ -213,3 +212,16 @@ def eliminar_reserva(id):
     global reservas
     reservas = [r for r in reservas if r["id"] != id]
     return jsonify({"message": "Reserva eliminada ✅"}), 200
+
+
+@api.route('/incidents/<string:email>', methods=['GET'])
+def get_user_incidents(email):
+    try:
+        incidents = Incident.query.filter_by(email=email).all()
+        return jsonify([incident.serialize() for incident in incidents]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+    
+

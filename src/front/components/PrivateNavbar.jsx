@@ -49,6 +49,9 @@ const PrivateNavbar = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/tenant/reservations">Reservations</Link>
                   </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/tenant/viewincidents">My Incidents</Link>
+                  </li>
                 </>
                 </ul>
               )}
