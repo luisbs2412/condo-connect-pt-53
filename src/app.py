@@ -12,6 +12,10 @@ from api.routes import api, Bcrypt
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from flask_mail import Mail, Message  # <-- Agregado Message
+from dotenv import load_dotenv
+load_dotenv()  # Carga las variables del .env
+
 
 # from models import Person
 
@@ -73,6 +77,26 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+# Configuración SMTP (moved before app.run)
+app.config['MAIL_SERVER'] = 'smtp-relay.brevo.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = '96ae5b002@smtp-brevo.com'
+app.config['MAIL_PASSWORD'] = '3XH809dst1FS2Lk6'
+app.config['MAIL_DEFAULT_SENDER'] = 'newyorkresidences@condoconnect.store'
+
+mail = Mail(app)
+
+@app.route('/send-email')
+def send_email():
+    msg = Message("Hola desde Brevo SMTP",
+                  recipients=["destinatario@ejemplo.com"])
+    msg.body = "Este es un correo enviado usando smtp-relay.brevo.com"
+    try:
+        mail.send(msg)
+        return "Correo enviado con éxito!"
+    except Exception as e:
+        return f"Error al enviar correo: {e}"
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

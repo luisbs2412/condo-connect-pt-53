@@ -1,14 +1,11 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, Incident, Reservation
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
-
+from flask_mail import Mail, Message
 
 api = Blueprint('api', __name__)
 bcrypt = Bcrypt()
@@ -20,13 +17,10 @@ CORS(api)
 @api.route('/hello', methods=['POST', 'GET'])
 @jwt_required()
 def handle_hello():
-
     response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+        "message": "Hello! I'm a message that came from the backend."
     }
-
     return jsonify(response_body), 200
-
 
 
 @api.route('/user/register', methods=['POST'])
@@ -43,14 +37,12 @@ def create_user():
     if password is None:
         return 'Password is required', 400
     elif len(password) < 8:
-        return 'Password should be max 8 characters long', 400
+        return 'Password should be at least 8 characters long', 400
 
-    # No validamos los demás campos, pueden venir vacíos o no venir
     first_name = request.json.get('first_name')
     last_name = request.json.get('last_name')
     apartment = request.json.get('apartment')
     role = request.json.get('role')
-    password = request.json.get('password')
 
     new_user = User(
         email=email,
@@ -61,13 +53,35 @@ def create_user():
         apartment=apartment,
         is_active=True
     )
+
     db.session.add(new_user)
     db.session.commit()
 
-    return 'User created', 200
+    # Enviar correo de bienvenida
+    try:
+        mail = Mail(current_app)
+        msg = Message(
+            subject="🎉 Bienvenido al portal del edificio",
+            recipients=[email]
+        )
+        msg.html = f"""
+        <h2>Hola {first_name},</h2>
+        <p>Tu cuenta ha sido registrada exitosamente en el portal del edificio.</p>
+        <p>Tu contraseña temporal es: <strong>12345678</strong></p>
+        <p>Por favor, inicia sesión y cámbiala lo antes posible.</p>
+        <br/>
+        <p>Gracias,</p>
+        <p><em>Equipo de Administración</em></p>
+        """
+        mail.send(msg)
+        print(f"Correo enviado a {email}")
+    except Exception as e:
+        print(f"Error al enviar correo: {e}")
+
+    return 'User created and email sent ✅', 200
+
 
 @api.route('/user/login', methods=['POST'])
-
 def login_user():
     email = request.json.get("email")
     password = request.json.get("password")
@@ -79,22 +93,20 @@ def login_user():
 
     if user is None:
         return jsonify({'message': 'Correo electrónico o contraseña inválida'}), 400
-    
-    if not bcrypt.check_password_hash(user.password, password):
-        return jsonify({'message': 'La contrseña es incorrecta'}), 400
-    
-    
-    access_token = create_access_token(identity=email)
-    return jsonify({"token": access_token, "user": user.serialize(), "role": user.role }), 200
 
-# Endpoint para recibir el formulario
+    if not bcrypt.check_password_hash(user.password, password):
+        return jsonify({'message': 'La contraseña es incorrecta'}), 400
+
+    access_token = create_access_token(identity=email)
+    return jsonify({"token": access_token, "user": user.serialize(), "role": user.role}), 200
+
+
 @api.route("/report", methods=['POST'])
 def report_incidence():
     data = request.json
     print("Datos recibidos:", data)
 
     try:
-        # Crear una nueva instancia del modelo Incident
         new_incident = Incident(
             name=data.get("name"),
             email=data.get("email"),
@@ -103,7 +115,6 @@ def report_incidence():
             description=data.get("description")
         )
 
-        # Guardar en la base de datos
         db.session.add(new_incident)
         db.session.commit()
 
@@ -118,24 +129,14 @@ def report_incidence():
             "message": "Error al guardar el reporte",
             "error": str(e)
         }), 500
-    
+
+
 @api.route("/user/listreservas", methods=["GET"])
 def listar_reservas():
-   # return 'estoy conectado', 200
-        return jsonify(reservas), 200
-
-# POST → crear nueva reserva
+    # Esto probablemente deberías conectarlo a la base de datos
+    return jsonify(reservas), 200
 
 
-# @api.route("/user/reserva", methods=["POST"])
-# def crear_reserva():
-#     data = request.get_json()
-#     data["id"] = len(reservas) + 1  # asignamos un ID automático
-#     reservas.append(data)
-#     return jsonify({
-#         "message": "Reserva creada ✅",
-#         "reserva": data
-#     }), 201
 @api.route("/user/reserva", methods=["POST"])
 def crear_reserva():
     data = request.get_json()
@@ -151,21 +152,16 @@ def crear_reserva():
     description = data.get("description")
     hora = data.get("hora")
     reservationpacking = data.get("reservationpacking")
-    reservationbbq= data.get("reservationbbq")
+    reservationbbq = data.get("reservationbbq")
 
-
-    # Validaciones simples
     if not first_name or not type or not email or not phone:
         return jsonify({"error": "first_name, type, email y phone son obligatorios"}), 400
-    
 
     try:
         if isinstance(hora, str):
             hora = datetime.fromisoformat(hora)
     except Exception:
         return jsonify({"error": "Formato de hora inválido. Usa YYYY-MM-DDTHH:MM:SS"}), 400
-
-
 
     nueva_reserva = Reservation(
         first_name=first_name,
@@ -188,9 +184,6 @@ def crear_reserva():
     }), 201
 
 
-# PUT → actualizar una reserva por id
-
-
 @api.route("/user/reservas/<int:id>", methods=["PUT"])
 def actualizar_reserva(id):
     data = request.get_json()
@@ -202,8 +195,6 @@ def actualizar_reserva(id):
                 "reserva": r
             }), 200
     return jsonify({"error": "Reserva no encontrada"}), 404
-
-# DELETE → eliminar una reserva por id
 
 
 @api.route("/user/reservas/<int:id>", methods=["DELETE"])
