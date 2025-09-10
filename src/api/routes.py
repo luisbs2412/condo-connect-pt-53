@@ -68,12 +68,12 @@ def create_user():
         )
         msg.html = f"""
         <h2>Hola {first_name},</h2>
-        <p>Tu cuenta ha sido registrada exitosamente en el portal del edificio New York Residences.</p>
+        <p>Tu cuenta ha sido registrada exitosamente en el portal del edificio.</p>
         <p>Tu contraseña temporal es: <strong>12345678</strong></p>
         <p>Por favor, inicia sesión y cámbiala lo antes posible.</p>
         <br/>
         <p>Gracias,</p>
-        <p><em>Equipo de Administración Condo Connect</em></p>
+        <p><em>Equipo de Administración</em></p>
         """
         mail.send(msg)
         print(f"Correo enviado a {email}")
