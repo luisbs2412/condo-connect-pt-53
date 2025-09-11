@@ -140,9 +140,9 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               <h5 className="card-title">Reserva tu estacionamiento</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
-              <Link to="/reserva" className="btn btn-primary">
+              {/* <Link to="/reserva" className="btn btn-primary">
                 Reservar
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
