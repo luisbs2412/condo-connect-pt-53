@@ -27,7 +27,7 @@ export const TenantIncidentsList = () => {
     fetchIncidents();
   }, []);
 
-  if (loading) return <p>Cargando incidencias...</p>;
+  if (loading) return <p>Loading incidents...</p>;
   if (error) return <p className="text-danger">{error}</p>;
 
   return (
@@ -55,7 +55,7 @@ export const TenantIncidentsList = () => {
   </p>
 
       {incidents.length === 0 ? (
-        <p>No tienes incidencias registradas.</p>
+        <p>You have no reported incidents.</p>
       ) : (
         <ul className="list-group">
           {incidents.map((incident) => (

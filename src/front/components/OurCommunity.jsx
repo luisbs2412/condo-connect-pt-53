@@ -5,12 +5,13 @@ const OurCommunity = () => {
   return (
     <section id="OurComunity" className="container py-5">
       <div className="text-center mb-5">
-        <h2 className="fw-bold">Servicios de CondoCommunity</h2>
+        <h2 className="fw-bold">CondoCommunity Services</h2>
         <p className="text-muted">
-          Las incidencias ocurren en cualquier momento: fallas técnicas, reportes de usuarios o situaciones imprevistas que necesitan atención inmediata. Nuestro servicio está diseñado para gestionar, asignar y dar solución rápida y efectiva a cada incidencia, garantizando continuidad y confianza en tus operaciones.
-
-Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y accesibles. Por eso ofrecemos un sistema de arriendo de estacionamientos, pensado para empresas, comunidades y particulares que buscan orden, seguridad y comodidad diaria.
-        </p>
+          Incidents can occur at any time: technical failures, user reports, or unforeseen situations that require immediate attention. 
+          Our service is designed to manage, assign, and provide quick and effective solutions for each incident, 
+          ensuring continuity and trust in your operations. At the same time, we understand the need for organized and accessible spaces. 
+          That’s why we offer a parking rental system, designed for businesses, communities, 
+          and individuals who seek order, security, and daily convenience. </p>
       </div>
 
 
@@ -29,7 +30,7 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               </span>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Lavanderia</h5>
+              <h5 className="card-title">Laundry</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
             </div>
@@ -50,7 +51,7 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               </span>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Gimnacio</h5>
+              <h5 className="card-title">Gym</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
             </div>
@@ -71,7 +72,7 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               </span>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Quincho</h5>
+              <h5 className="card-title">BBQ Area</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
             </div>
@@ -92,7 +93,7 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               </span>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Sala Multi-uso</h5>
+              <h5 className="card-title">Community Room</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
             </div>
@@ -113,7 +114,7 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               </span>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Piscina</h5>
+              <h5 className="card-title">Pool</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
             </div>
@@ -134,7 +135,7 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               </span>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Reserva tu estacionamiento</h5>
+              <h5 className="card-title">Resident Parking</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
             </div>

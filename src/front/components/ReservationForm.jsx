@@ -175,7 +175,7 @@ const ReservationForm = () => {
         {tipo === "Packing" && (
           <>
             <div className="col-md-6 mb-3">
-              <label className="form-label">Packing Spot</label>
+              <label className="form-label">Parking Spot</label>
               <input
                 onChange={handleChange}
                 type="number"
@@ -258,7 +258,7 @@ const ReservationForm = () => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Enviar Reserva {tipo}
+          Submit Reservation {tipo}
         </button>
       </div>
     </form>
@@ -292,7 +292,7 @@ const ReservationForm = () => {
             aria-controls="pills-packing"
             aria-selected="false"
           >
-            Packing
+            Parking
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -330,7 +330,7 @@ const ReservationForm = () => {
           aria-labelledby="pills-packing-tab"
           tabIndex="0"
         >
-          <h2>Packing Reservation</h2>
+          <h2>Parking Reservation</h2>
           {renderForm("Packing")}
         </div>
 

@@ -189,8 +189,6 @@ def crear_reserva():
     }), 201
 
 
-# PUT → actualizar una reserva por id
-
 
 @api.route("/user/reservas/<int:id>", methods=["PUT"])
 def actualizar_reserva(id):
@@ -229,17 +227,23 @@ def send_welcome_email(email, first_name, password):
             recipients=[email]
         )
         msg.html = f"""
-             <h2>Hello {first_name},</h2>
-             <p>Your account has been successfully registered in the New York Residences portal.</p>
-             <p>Your temporary password is: <strong>{password}</strong></p>
-             <br/>
-             <p>Thank you,</p>
-             <p><em>Condo Connect Administration Team</em></p>
-             """
+            <h2>Hello {first_name},</h2>
+            <p>Your account has been successfully registered in the New York Residences portal.</p>
+            <p>Now you can access the Tenant Portal at the following link using your email as your username and the password below:</p>
+            <p>
+                <strong>Link:</strong> <a href="https://special-engine-56pvrqw79w6cjxw-3000.app.github.dev/" target="_blank">
+                https://special-engine-56pvrqw79w6cjxw-3000.app.github.dev/</a><br/>
+                <strong>Username:</strong> {email}<br/>
+                <strong>Password:</strong> {password}
+            </p>
+            <br/>
+            <p>Thank you,</p>
+            <p><em>Condo Connect Administration Team</em></p>
+        """
         mail.send(msg)
 
     except Exception as e:
-        print("Failure sending the email: {e}")
+        print(f"Failure sending the email: {e}")
         traceback.print_exc()
 
 

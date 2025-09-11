@@ -22,20 +22,20 @@ const MyReservations = () => {
   }, [user]);
 
   if (!user) {
-    return <h2>No hay usuario logeado</h2>;
+    return <h2>No user is logged in.</h2>;
   }
 
   return (
     <div className="container mt-4">
-      <h2>Reservas de {user.full_name}</h2>
+      <h2>{user.first_name}'s Reservations</h2>
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Tipo</th>
-            <th>Fecha/Hora</th>
-            <th>Departamento</th>
-            <th>Descripción</th>
-            <th>Contacto</th>
+            <th>Type</th>
+            <th>Date/Time</th>
+            <th>Apartment</th>
+            <th>Description</th>
+            <th>Contact</th>
           </tr>
         </thead>
         <tbody>
@@ -52,7 +52,7 @@ const MyReservations = () => {
           ) : (
             <tr>
               <td colSpan="5" className="text-center">
-                No tienes reservas aún
+                You have no reservations yet
               </td>
             </tr>
           )}

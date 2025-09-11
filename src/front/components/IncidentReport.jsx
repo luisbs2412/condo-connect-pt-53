@@ -19,13 +19,13 @@ const IncidentReport = () => {
     setSuccess("");
 
     if (!name || !email || !apartment || !title || !description) {
-      setError("Por favor, completa todos los campos obligatorios (*).");
+      setError("Please fill in all required fields. (*).");
       return;
     }
 
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(email)) {
-      setError("El email no es válido.");
+      setError("The email is not valid.");
       return;
     }
 
@@ -37,11 +37,11 @@ const IncidentReport = () => {
         body: JSON.stringify(incident),
       });
 
-      if (!res.ok) throw new Error("Error al enviar al backend");
+      if (!res.ok) throw new Error("Error sending to the backend.");
 
       const data = await res.json();
-      console.log("Respuesta del backend:", data);
-      setSuccess("Reporte enviado con éxito ");
+      console.log("Backend response:", data);
+      setSuccess("Report sent successfully.");
 
       setName("");
       setEmail("");
@@ -50,7 +50,7 @@ const IncidentReport = () => {
       setDescription("");
     } catch (err) {
       console.error(err);
-      setError("Error al enviar el reporte ❌");
+      setError("Error sending the report. ❌");
     }
   };
 
@@ -100,7 +100,7 @@ const IncidentReport = () => {
           </div>
 
           <div className="col-12">
-            <label className="form-label"><strong>Título: </strong>*</label>
+            <label className="form-label"><strong>Title: </strong>*</label>
             <input
               type="text"
               className="form-control"
