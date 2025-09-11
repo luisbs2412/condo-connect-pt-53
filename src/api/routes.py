@@ -253,3 +253,28 @@ def send_welcome_email(email, first_name, password):
     except Exception as e:
         print("Failure sending the email: {e}")
         traceback.print_exc()
+
+
+@api.route("/incidents/all", methods=["GET"])
+def listar_incidentes():
+    incidentes = Incident.query.all()
+    return jsonify([i.serialize() for i in incidentes]), 200
+
+@api.route("/incidents/update/<int:id>", methods=["PATCH"])
+def actualizar_incidente(id):
+    data = request.get_json()
+    incidente = Incident.query.get(id)
+
+    if not incidente:
+        return jsonify({"error": "Incidente no encontrado"}), 404
+
+    # Actualizar los campos del incidente
+    
+    incidente.status = data.get("status", incidente.status)
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Incidente actualizado exitosamente",
+        "incident": incidente.serialize()
+    }), 200
