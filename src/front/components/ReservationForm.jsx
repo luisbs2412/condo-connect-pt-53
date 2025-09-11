@@ -24,7 +24,6 @@ const ReservationForm = () => {
     reservationbbq: "",
     bbq_date: "",
     bbq_time: "",
-    
   });
 
   const handleChange = (event) => {
@@ -58,7 +57,6 @@ const ReservationForm = () => {
       hora,
       reservationpacking: user.reservationpacking,
       reservationbbq: user.reservationbbq,
-      user_id:store.user.user?.id
     };
 
     // Enviar al backend
@@ -180,7 +178,7 @@ const ReservationForm = () => {
         {tipo === "Packing" && (
           <>
             <div className="col-md-6 mb-3">
-              <label className="form-label">Packing</label>
+              <label className="form-label">Packing Spot</label>
               <input
                 onChange={handleChange}
                 type="number"
@@ -216,7 +214,7 @@ const ReservationForm = () => {
         {tipo === "BBQ" && (
           <>
             <div className="col-md-6 mb-3">
-              <label className="form-label">BBQ</label>
+              <label className="form-label">BBQ Spot</label>
               <input
                 onChange={handleChange}
                 type="number"

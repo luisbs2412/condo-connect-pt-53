@@ -15,7 +15,6 @@ class User(db.Model):
     role: Mapped[str] = mapped_column(String(20), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     apartment = db.Column(db.String(120), nullable=True)
-    reservations: Mapped[list["Reservation"]] = db.relationship(back_populates="user")
 
 
 
@@ -42,8 +41,6 @@ class Reservation(db.Model):
  hora: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
  reservationpacking: Mapped[str] = mapped_column(String(50), nullable=True)
  reservationbbq: Mapped[str] = mapped_column(String(50), nullable=True)
- user_id: Mapped[int] = mapped_column(db.ForeignKey('user.id'), nullable=False) 
- user: Mapped["User"] = db.relationship(back_populates="reservations")
  
 
  def serialize(self):
@@ -56,8 +53,7 @@ class Reservation(db.Model):
          "description": self.description,
          "hora": self.hora.strftime("%Y-%m-%dT%H:%M:%S"), # solo hora en formato HH:MM:SS
          "reservationpacking": self.reservationpacking,
-         "reservationbbq": self.reservationbbq,
-         "user_id": self.user_id
+         "reservationbbq": self.reservationbbq
      }
     
 class Incident(db.Model):
