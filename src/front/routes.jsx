@@ -14,7 +14,11 @@ import { RegisterTenantPage } from "./pages/admin/RegisterTenantPage";
 import PrivateRoute from "./components/PrivateRoute";
 import { PrivateLayout } from './pages/PrivateLayout';
 import WelcomePage from "./pages/WelcomePage";
+ feature/reservationslist
+import ReservationsList from "./pages/tenant/ReservationsList";
+
 import { MyIncidents } from "./pages/tenant/MyIncidents";
+ main
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,9 +45,16 @@ export const router = createBrowserRouter(
       <Route path="/tenant/reservations" element={<PrivateRoute allowedRoles={['Tenant']} >
         <ReservationPage />
       </PrivateRoute>} />
+ feature/reservationslist
+      <Route path="/tenant/reservationslist" element={<PrivateRoute allowedRoles={['Tenant']} >
+        <ReservationsList />
+      </PrivateRoute>} />
+
+
       <Route path="/tenant/viewincidents" element={<PrivateRoute allowedRoles={['Tenant']} >
         <MyIncidents />
       </PrivateRoute>} />
+ main
 
       {/* Proteger Rutas de Admin */}
 

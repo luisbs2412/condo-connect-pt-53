@@ -124,12 +124,30 @@ def report_incidence():
             "message": "Error al guardar el reporte",
             "error": str(e)
         }), 500
+ feature/reservationslist
+    
+    reservas = [],
+    
 
 
+
+ main
 @api.route("/user/listreservas", methods=["GET"])
 def listar_reservas():
+        todas_las_reservas = Reservation.query.all()
+        listado_reservas_serializado = [reserva.serialize() for reserva in todas_las_reservas]
+        return jsonify(listado_reservas_serializado), 200
+
+@api.route("/user/<string:email>/reservas", methods=["GET"])
+def get_reservas_by_email(email):
+    reservas = Reservation.query.filter_by(email=email).all()
+    return jsonify([r.serialize() for r in reservas]), 200
    # return 'estoy conectado', 200
+ feature/reservationslist
+        #return jsonify(reservas), 200
+
     return jsonify(reservas), 200
+ main
 
 # POST → crear nueva reserva
 
@@ -146,6 +164,7 @@ def listar_reservas():
 @api.route("/user/reserva", methods=["POST"])
 def crear_reserva():
     data = request.get_json()
+   
 
     if not data:
         return jsonify({"error": "No data provided"}), 400
@@ -159,6 +178,10 @@ def crear_reserva():
     hora = data.get("hora")
     reservationpacking = data.get("reservationpacking")
     reservationbbq = data.get("reservationbbq")
+ feature/reservationslist
+    user_id = data.get("user_id")
+
+ main
 
     # Validaciones simples
     if not first_name or not type or not email or not phone:
@@ -180,6 +203,7 @@ def crear_reserva():
         hora=hora,
         reservationpacking=reservationpacking,
         reservationbbq=reservationbbq,
+       user_id=user_id
     )
 
     db.session.add(nueva_reserva)
