@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
+=======
+from flask import Flask, logging, request, jsonify, url_for, Blueprint, current_app
+>>>>>>> feature/emailConfirmation
 from api.models import db, User, Incident, Reservation
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -65,7 +69,34 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
 
+<<<<<<< HEAD
     return 'User created', 200
+=======
+    # Sending Welcome Email
+    try:
+        mail = Mail(current_app)
+        msg = Message(
+            subject=" Bienvenido al portal del edificio",
+            recipients=[email]
+        )
+        msg.html = f"""
+             <h2>Hello {first_name},</h2>
+             <p>Your account has been successfully registered in the New York Residences portal.</p>
+             <p>Your temporary password is: <strong>12345678</strong></p>
+             <p>Please log in and change it as soon as possible.</p>
+             <br/>
+             <p>Thank you,</p>
+             <p><em>Condo Connect Administration Team</em></p>
+             """
+        mail.send(msg)
+
+    except Exception as e:
+        
+        logging.error(f"Failure sending the email: {e}")
+
+    return 'User created and email sent', 200
+
+>>>>>>> feature/emailConfirmation
 
 @api.route('/user/login', methods=['POST'])
 
