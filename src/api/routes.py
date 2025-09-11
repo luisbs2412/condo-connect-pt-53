@@ -159,7 +159,6 @@ def crear_reserva():
     reservationpacking = data.get("reservationpacking")
     reservationbbq = data.get("reservationbbq")
 
-    # Validaciones simples
     if not first_name or not type or not email or not phone:
         return jsonify({"error": "first_name, type, email y phone son obligatorios"}), 400
 
@@ -233,7 +232,6 @@ def send_welcome_email(email, first_name, password):
              <h2>Hello {first_name},</h2>
              <p>Your account has been successfully registered in the New York Residences portal.</p>
              <p>Your temporary password is: <strong>{password}</strong></p>
-             <p>Please log in and change it as soon as possible.</p>
              <br/>
              <p>Thank you,</p>
              <p><em>Condo Connect Administration Team</em></p>
