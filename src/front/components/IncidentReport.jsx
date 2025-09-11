@@ -9,7 +9,6 @@ const IncidentReport = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState(""); 
 
-  // Mensajes de error/éxito
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -19,7 +18,6 @@ const IncidentReport = () => {
     setError("");
     setSuccess("");
 
-    // Validaciones
     if (!name || !email || !apartment || !title || !description) {
       setError("Por favor, completa todos los campos obligatorios (*).");
       return;
@@ -45,7 +43,6 @@ const IncidentReport = () => {
       console.log("Respuesta del backend:", data);
       setSuccess("Reporte enviado con éxito ");
 
-      // Limpiar formulario
       setName("");
       setEmail("");
       setApartment("");
@@ -65,7 +62,6 @@ const IncidentReport = () => {
            and in a timely manner. Your report will help us maintain a safe and well-organized community.
         </h5>
 
-        {/* Mensajes de error o éxito */}
         <Alert type="error" message={error} />
         <Alert type="success" message={success} />
 

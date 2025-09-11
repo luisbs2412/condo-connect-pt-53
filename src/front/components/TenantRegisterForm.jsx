@@ -9,7 +9,6 @@ const TenantRegisterForm = () => {
   const [email, setEmail] = useState("");
   const [apartment, setApartment] = useState("");
 
-  // Mensajes de error/éxito
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -19,7 +18,6 @@ const TenantRegisterForm = () => {
     setError("");
     setSuccess("");
 
-    // Validaciones
     if (!name || !email || !apartment) {
       setError("Por favor, completa todos los campos obligatorios (*).");
       return;
@@ -46,7 +44,6 @@ const TenantRegisterForm = () => {
       console.log("Respuesta del backend:", data);
       setSuccess("Tenat creado con éxito ✅");
 
-        // Limpiar formulario
       setName("");
       setEmail("");
       setApartment("");
@@ -58,7 +55,6 @@ const TenantRegisterForm = () => {
 
 
     return (
-        // * Crear la logica del Formulario aqui * 
         <form>
             <div>
                 <label htmlFor="name">Name:</label>

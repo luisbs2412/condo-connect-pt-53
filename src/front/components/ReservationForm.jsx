@@ -60,7 +60,6 @@ const ReservationForm = () => {
       user_id:store.user.user?.id
     };
 
-    // Enviar al backend
     fetch(`${backendUrl}api/user/reserva`, {
       method: "POST",
       headers: {
@@ -76,7 +75,6 @@ const ReservationForm = () => {
         console.log("Reserva creada:", data);
         alert("Reserva creada con exito");
 
-        // acción dinámica
         const actionType =
           tipo === "Gym"
             ? "addReservaGym"
@@ -89,7 +87,7 @@ const ReservationForm = () => {
           payload: data,
         });
 
-        navigate("#"); // redirige al home
+        navigate("#");
       })
       .catch((error) => {
         console.error("Hubo un error:", error);
@@ -97,11 +95,9 @@ const ReservationForm = () => {
       });
   };
 
-  // Render dinámico
   const renderForm = (tipo) => (
     <form onSubmit={(e) => handleSubmit(e, tipo)}>
       <div className="row">
-        {/* Datos comunes */}
         <div className="col-md-6 mb-3">
           <label className="form-label"># Full Name</label>
           <input
@@ -247,7 +243,6 @@ const ReservationForm = () => {
           </>
         )}
 
-        {/* Descripción */}
         <div className="mb-3">
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Description

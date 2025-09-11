@@ -8,7 +8,6 @@ export const TenantIncidentsList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   
-  // 🚨 Simulación de usuario autenticado (en real, viene del contexto/login)
   const userEmail = store?.user.user?.email;
 
   useEffect(() => {

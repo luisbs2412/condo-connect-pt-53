@@ -3,7 +3,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const MyReservations = () => {
   const { store } = useGlobalReducer();
-  const user = store.user.user; // usuario logeado
+  const user = store.user.user;
   const [reservations, setReservations] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 

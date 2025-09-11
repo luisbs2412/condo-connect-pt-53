@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../assets/img/image.webp"; // Adjust the path as necessary
+import image from "../assets/img/image.webp"; 
 
 const AboutUs = () => {
   return (

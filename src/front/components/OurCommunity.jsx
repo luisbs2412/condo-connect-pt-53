@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const OurCommunity = () => {
   return (
     <section id="OurComunity" className="container py-5">
-      {/* Encabezado */}
       <div className="text-center mb-5">
         <h2 className="fw-bold">Servicios de CondoCommunity</h2>
         <p className="text-muted">
@@ -15,7 +14,6 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
       </div>
 
 
-      {/* Cards */}
       <div className="row g-4">
         <div className="col-md-4">
           <div className="card h-100 shadow-sm border-0">
@@ -80,7 +78,6 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
           </div>
         </div>
 
-        {/*Agrego más tarjetas (4, 5 y 6) igual que arriba*/}
         <div className="col-md-4">
           <div className="card h-100 shadow-sm border-0">
             <div className="position-relative">
@@ -140,9 +137,6 @@ Al mismo tiempo, entendemos la necesidad de contar con espacios organizados y ac
               <h5 className="card-title">Reserva tu estacionamiento</h5>
               <p className="text-muted"></p>
               <p className="text-secondary"></p>
-              {/* <Link to="/reserva" className="btn btn-primary">
-                Reservar
-              </Link> */}
             </div>
           </div>
         </div>

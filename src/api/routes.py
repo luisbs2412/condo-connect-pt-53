@@ -91,6 +91,7 @@ def login_user():
     access_token = create_access_token(identity=email)
     return jsonify({"token": access_token, "user": user.serialize(), "role": user.role}), 200
 
+
 # Endpoint para recibir el formulario
 
 
@@ -100,7 +101,6 @@ def report_incidence():
     print("Datos recibidos:", data)
 
     try:
-        # Crear una nueva instancia del modelo Incident
         new_incident = Incident(
             name=data.get("name"),
             email=data.get("email"),
@@ -109,7 +109,6 @@ def report_incidence():
             description=data.get("description")
         )
 
-        # Guardar en la base de datos
         db.session.add(new_incident)
         db.session.commit()
 
@@ -127,29 +126,22 @@ def report_incidence():
 
 
 reservas = [],
-    
+
+
 @api.route("/user/listreservas", methods=["GET"])
 def listar_reservas():
-        todas_las_reservas = Reservation.query.all()
-        listado_reservas_serializado = [reserva.serialize() for reserva in todas_las_reservas]
-        return jsonify(listado_reservas_serializado), 200
+    todas_las_reservas = Reservation.query.all()
+    listado_reservas_serializado = [
+        reserva.serialize() for reserva in todas_las_reservas]
+    return jsonify(listado_reservas_serializado), 200
+
 
 @api.route("/user/<string:email>/reservas", methods=["GET"])
 def get_reservas_by_email(email):
     reservas = Reservation.query.filter_by(email=email).all()
     return jsonify([r.serialize() for r in reservas]), 200
-# POST → crear nueva reserva
 
 
-# @api.route("/user/reserva", methods=["POST"])
-# def crear_reserva():
-#     data = request.get_json()
-#     data["id"] = len(reservas) + 1  # asignamos un ID automático
-#     reservas.append(data)
-#     return jsonify({
-#         "message": "Reserva creada ✅",
-#         "reserva": data
-#     }), 201
 @api.route("/user/reserva", methods=["POST"])
 def crear_reserva():
     data = request.get_json()
@@ -213,8 +205,6 @@ def actualizar_reserva(id):
             }), 200
     return jsonify({"error": "Reserva no encontrada"}), 404
 
-# DELETE → eliminar una reserva por id
-
 
 @api.route("/user/reservas/<int:id>", methods=["DELETE"])
 def eliminar_reserva(id):
@@ -260,6 +250,7 @@ def listar_incidentes():
     incidentes = Incident.query.all()
     return jsonify([i.serialize() for i in incidentes]), 200
 
+
 @api.route("/incidents/update/<int:id>", methods=["PATCH"])
 def actualizar_incidente(id):
     data = request.get_json()
@@ -268,8 +259,7 @@ def actualizar_incidente(id):
     if not incidente:
         return jsonify({"error": "Incidente no encontrado"}), 404
 
-    # Actualizar los campos del incidente
-    
+
     incidente.status = data.get("status", incidente.status)
 
     db.session.commit()

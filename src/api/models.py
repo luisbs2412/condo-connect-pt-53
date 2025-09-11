@@ -51,7 +51,7 @@ class Reservation(db.Model):
          "phone": self.phone,
          "apartment": self.apartment,
          "description": self.description,
-         "hora": self.hora.strftime("%Y-%m-%dT%H:%M:%S"), # solo hora en formato HH:MM:SS
+         "hora": self.hora.strftime("%Y-%m-%dT%H:%M:%S"), 
          "reservationpacking": self.reservationpacking,
          "reservationbbq": self.reservationbbq
      }

@@ -4,7 +4,6 @@ import rigoImageUrl from "../assets/img/large_Hero.jpg";
 const Banner = () => {
   return (
     <div>
-      {/* Hero Section */}
       <div
         className="hero d-flex flex-column justify-content-center align-items-center text-center"
         style={{
@@ -18,7 +17,6 @@ const Banner = () => {
           fontFamily: "'Playfair Display', serif"
         }}
       >
-        {/* Overlay semi-transparente */}
         <div
           className="overlay"
           style={{

@@ -1,12 +1,9 @@
 import React from 'react';
-import useGlobalReducer from '../hooks/useGlobalReducer'; // Ajusta la ruta si es necesario
+import useGlobalReducer from '../hooks/useGlobalReducer'; 
 
 const Welcome = () => {
-  // Accede al estado global directamente desde el componente
   const { store } = useGlobalReducer();
-  const userName = store.user.user?.first_name; // Usa encadenamiento opcional para evitar errores
-
-  // Si no hay nombre de usuario, no renderiza nada
+  const userName = store.user.user?.first_name; 
   if (!userName) {
     return null;
   }

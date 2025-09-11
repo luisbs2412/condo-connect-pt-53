@@ -6,10 +6,9 @@ const IncidentList = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     const [incidents, setIncidents] = useState([]); // Cambiado para almacenar la lista de incidentes
     
-    // useEffect se ejecuta después de que el componente se monta
     useEffect(() => {
         fetchIncidents();
-    }, []); // El array vacío de dependencias asegura que se ejecute solo una vez
+    }, []); 
 
     const fetchIncidents = () => {
         fetch(`${backendUrl}api/incidents/all`)
@@ -20,8 +19,7 @@ const IncidentList = () => {
                 return response.json();
             })
             .then((data) => {
-                setIncidents(data); // Actualiza el estado con los datos de la API
-                console.log(data);
+                setIncidents(data); 
             })
             .catch((error) => {
                 console.error('Error de red:', error);
@@ -43,11 +41,10 @@ const IncidentList = () => {
                 return response.json();
             })
             .then(() => {
-                // Actualiza el estado local de la lista
                 setIncidents(incidents.map(incident =>
                     incident.id === id ? { ...incident, status: newState } : incident
                 ));
-                fetchIncidents(); // Opcional: Volver a cargar la lista completa para asegurar la sincronización
+                fetchIncidents(); 
             })
             .catch((error) => {
                 console.error('Error de red:', error);
