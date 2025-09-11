@@ -1,0 +1,231 @@
+[33mcommit 2a6d71437f85b30ef0f91235b4a6735f642ac3e8[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/feature/emailConfirmation[m[33m)[m
+Author: Alejandro Lopez <123325333+Alejo32267@users.noreply.github.com>
+Date:   Wed Sep 10 23:05:55 2025 +0000
+
+    Done
+
+[33mcommit bb2d719528e3369cdc636fa6c104fd014b113dab[m
+Author: Alejandro Lopez <123325333+Alejo32267@users.noreply.github.com>
+Date:   Wed Sep 10 01:16:47 2025 +0000
+
+    mejora en el email
+
+[33mcommit 289ea9e42bac21d5c3e9e6dccb7d8878fb80be73[m
+Author: Alejandro Lopez <123325333+Alejo32267@users.noreply.github.com>
+Date:   Wed Sep 10 00:46:25 2025 +0000
+
+    email confirmation done
+
+[33mcommit 93c39b86b5c427509f49b1426ebc540356b39bcb[m[33m ([m[1;31morigin/feature/registerTenant[m[33m)[m
+Author: Alejandro Lopez <123325333+Alejo32267@users.noreply.github.com>
+Date:   Mon Sep 8 21:44:19 2025 +0000
+
+    Register Tenant Feature done
+
+[33mcommit 0df29d26010ab8dd5f72eb67f5c3b8251b7da64d[m
+Author: Alejandro Lopez <123325333+Alejo32267@users.noreply.github.com>
+Date:   Mon Sep 8 02:13:49 2025 +0000
+
+    Work in progress
+
+[33mcommit 82477f064fb493bdbcdfd5a792c5327a969d221d[m
+Merge: 8ebe4d9 f5faaa9
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Sat Sep 6 21:26:37 2025 -0400
+
+    Merge pull request #38 from luisbs2412/feature/reservation_packing
+    
+    Feature/reservation packing
+
+[33mcommit f5faaa9ec5410f3d129701bc300c0711af8b1d0d[m[33m ([m[1;31morigin/feature/reservation_packing[m[33m)[m
+Author: jhuequeman <huequeman@gmail.com>
+Date:   Sun Sep 7 00:42:57 2025 +0000
+
+    migracion de tablas de gym packing y bbq en bbdd
+
+[33mcommit 8c37d565a72346b3de6236e89b5c13a721f07b68[m
+Author: jhuequeman <huequeman@gmail.com>
+Date:   Sun Sep 7 00:40:58 2025 +0000
+
+    reservas de Gym Packing y BBQ OK
+
+[33mcommit 8ebe4d97c774dce12ec8b1b0b2aaf6b5715120bb[m
+Merge: 64e7d5d e0d6b2b
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Thu Sep 4 20:55:09 2025 -0400
+
+    Merge pull request #37 from luisbs2412/feature/reservation_gym
+    
+    Feature/reservation gym actualizada 4/09/25
+
+[33mcommit e0d6b2b2ed5f690d9102e53ec54d306c0a93d9bc[m[33m ([m[1;31morigin/feature/reservation_gym[m[33m)[m
+Author: jhuequeman <huequeman@gmail.com>
+Date:   Thu Sep 4 23:52:40 2025 +0000
+
+    migracion del modelo de reservas
+
+[33mcommit 93af56d9e8ba97bf20cac483f3be1d3dd5c70c6b[m
+Author: jhuequeman <huequeman@gmail.com>
+Date:   Thu Sep 4 23:50:11 2025 +0000
+
+    reservas de gym OK
+
+[33mcommit 64e7d5d7be9f6f27c8afd1b3db498a1b9ba3e646[m
+Merge: d5a766c 4d8af92
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Sep 3 20:32:13 2025 -0400
+
+    Merge pull request #36 from luisbs2412/incidents
+    
+    Incident Report Actualizada.
+
+[33mcommit 4d8af92d1a4f2a35cb3b912210487c94c5e44e80[m[33m ([m[1;31morigin/incidents[m[33m)[m
+Author: Liamel Pardo <liamelpardo92@gmail.com>
+Date:   Thu Sep 4 00:19:50 2025 +0000
+
+    Incident Report creado
+
+[33mcommit d5a766c2ab26305b69b62016c5cf7bb1aa9cb824[m
+Merge: 90f2f82 eb70bf1
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Sep 3 12:51:39 2025 -0400
+
+    Merge pull request #35 from luisbs2412/revert-34-banner
+    
+    Revert "Incident List Creada" Demasiados conflictos
+
+[33mcommit eb70bf118db4b37870f08556645c64c36897a506[m[33m ([m[1;31morigin/revert-34-banner[m[33m)[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Sep 3 12:46:17 2025 -0400
+
+    Revert "Incident List Creada"
+
+[33mcommit 90f2f822596a9bfe67a66de4578ab4d8065f2914[m
+Merge: efd303c 62cb71e
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Sep 3 12:03:11 2025 -0400
+
+    Merge pull request #34 from luisbs2412/banner
+    
+    Incident List Creada, Cambios LPardo 2/09
+
+[33mcommit 62cb71ef6c27e2c65a00015797f41bf12746f52a[m[33m ([m[1;31morigin/banner[m[33m)[m
+Merge: 7161542 efd303c
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Sep 3 00:49:56 2025 -0400
+
+    Merge branch 'main' into banner
+
+[33mcommit 71615423f9504ad843b4c898ef07900af0dba8b3[m
+Author: Liamel Pardo <liamelpardo92@gmail.com>
+Date:   Wed Sep 3 00:51:58 2025 +0000
+
+    Incident List Creada
+
+[33mcommit efd303c3c5494e7b0e63b28bcb95aa9a3fc81ba4[m
+Merge: 281cdd5 99a7840
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Tue Sep 2 16:26:27 2025 +0000
+
+    Merge remote-tracking branch 'origin'
+
+[33mcommit 281cdd55a421127760967d8bfcca1bff74781572[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Tue Sep 2 16:23:36 2025 +0000
+
+    arreglo de rutas incidentList
+
+[33mcommit 99a78404df0d77aadedc7252add310fb0b15c14f[m[33m ([m[1;31morigin/feature/login[m[33m, [m[1;31morigin/feature/incident-management[m[33m)[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Tue Sep 2 03:16:20 2025 +0000
+
+    agregar bootstrap al layout para tenerlo disponible en todo el proyecto
+
+[33mcommit 6b2adf1fe03d7a7e77624cfde19084e9c94ecde6[m
+Merge: 9ea6b63 f572ad6
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Mon Sep 1 18:40:18 2025 -0400
+
+    Merge pull request #31 from luisbs2412/feature/login
+    
+    Feature/login descriptivo
+
+[33mcommit f572ad658c54085bf4fff75ac480482c7fda25bc[m
+Merge: fe6a8de 9ea6b63
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Mon Sep 1 18:38:48 2025 -0400
+
+    Merge branch 'main' into feature/login
+
+[33mcommit fe6a8de859f00a4b2771f0326bdce910efce3aa4[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Mon Sep 1 22:10:51 2025 +0000
+
+    cambios para funcionalidad Login
+
+[33mcommit 93f75dccff4d3fe1f82428e40c7f4273c537321d[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Mon Sep 1 22:05:17 2025 +0000
+
+    migracion tabla user y reservation
+
+[33mcommit 9ea6b635c9a0c3296eecf881c038eb1b915274aa[m
+Merge: 929d770 cb02360
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Fri Aug 29 19:14:38 2025 -0400
+
+    Merge pull request #30 from luisbs2412/banner
+    
+    registerTenantPage y IncidentManagements creados
+
+[33mcommit cb0236053d34d2b9c4385b2086fa8c7182d6dadf[m
+Author: Liamel Pardo <liamelpardo92@gmail.com>
+Date:   Fri Aug 29 23:03:18 2025 +0000
+
+    registerTenantPage y IncidentManagements creados
+
+[33mcommit 929d770c1e15ce23de6db44c17fa7497401dfaa2[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Thu Aug 28 07:57:07 2025 +0000
+
+    "Componentes y vistas listos"
+
+[33mcommit 16cf4f0d698c2b8425c6b87a9b3c11a285032838[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Thu Aug 28 07:54:14 2025 +0000
+
+    Modificaciones de rutas y creacion de vistas y componentes necesarios
+
+[33mcommit fd768dde3fe5ee45283fd5bb519d1d592a856aa9[m
+Merge: 4bcd420 7ccd16d
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Aug 27 19:54:55 2025 -0400
+
+    Merge pull request #21 from luisbs2412/component/Tenant
+    
+    Primer commit para revision Aceptado
+
+[33mcommit 4bcd4201e6df86eedba364434a45d47f5e972bb8[m[33m ([m[1;31morigin/feature/layout[m[33m)[m
+Merge: e1da300 9921c26
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Aug 27 12:59:31 2025 -0400
+
+    Merge pull request #29 from luisbs2412/developer/Luis
+    
+    migraciones tabla user
+
+[33mcommit 9921c268c4d5440fdeed023acaa877ad41685cb5[m[33m ([m[1;31morigin/developer/Luis[m[33m)[m
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>
+Date:   Wed Aug 27 15:50:44 2025 +0000
+
+    migraciones tabla user
+
+[33mcommit 7ccd16d2f3da98fcda523853006fae4d91a73a63[m[33m ([m[1;31morigin/component/Tenant[m[33m)[m
+Author: Alejandro Lopez <123325333+Alejo32267@users.noreply.github.com>
+Date:   Tue Aug 26 22:33:06 2025 +0000
+
+    Primer commit para revision
+
+[33mcommit e1da3000916b8abd6db125d9930397c634e792d5[m
+Merge: efbb3a4 28769d8
+Author: Luis Bermudez <44736658+luisbs2412@users.noreply.github.com>

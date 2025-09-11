@@ -33,13 +33,8 @@ export const RegisterTenantPage = () => {
       password: "12345678",      
       first_name: firstName,
       last_name: lastName,
-<<<<<<< HEAD
-      apartment: apartment,      // Nuevo campo enviado
-      role: "Tenant"
-=======
       apartment: apartment,      
       role: "tenant"
->>>>>>> feature/emailConfirmation
     };
 
     try {
