@@ -126,11 +126,18 @@ def report_incidence():
         }), 500
 
 
+reservas = [],
+    
 @api.route("/user/listreservas", methods=["GET"])
 def listar_reservas():
-   # return 'estoy conectado', 200
-    return jsonify(reservas), 200
+        todas_las_reservas = Reservation.query.all()
+        listado_reservas_serializado = [reserva.serialize() for reserva in todas_las_reservas]
+        return jsonify(listado_reservas_serializado), 200
 
+@api.route("/user/<string:email>/reservas", methods=["GET"])
+def get_reservas_by_email(email):
+    reservas = Reservation.query.filter_by(email=email).all()
+    return jsonify([r.serialize() for r in reservas]), 200
 # POST → crear nueva reserva
 
 

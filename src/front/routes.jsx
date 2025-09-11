@@ -15,6 +15,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import { PrivateLayout } from './pages/PrivateLayout';
 import WelcomePage from "./pages/WelcomePage";
 import { MyIncidents } from "./pages/tenant/MyIncidents";
+import ReservationsList from "./pages/tenant/ReservationsList";
+
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,6 +45,9 @@ export const router = createBrowserRouter(
       </PrivateRoute>} />
       <Route path="/tenant/viewincidents" element={<PrivateRoute allowedRoles={['Tenant']} >
         <MyIncidents />
+      </PrivateRoute>} />
+       <Route path="/tenant/reservationslist" element={<PrivateRoute allowedRoles={['Tenant']} >
+        <ReservationsList />
       </PrivateRoute>} />
 
       {/* Proteger Rutas de Admin */}
