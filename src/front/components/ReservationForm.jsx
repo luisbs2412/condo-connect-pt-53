@@ -57,6 +57,7 @@ const ReservationForm = () => {
       hora,
       reservationpacking: user.reservationpacking,
       reservationbbq: user.reservationbbq,
+      user_id:store.user.user?.id
     };
 
     // Enviar al backend
