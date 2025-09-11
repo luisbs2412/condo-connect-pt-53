@@ -12,6 +12,7 @@ from api.routes import api, Bcrypt
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from flask_mail import Mail, Message
 
 # from models import Person
 
@@ -65,6 +66,8 @@ def sitemap():
     return send_from_directory(static_file_dir, 'index.html')
 
 # any other endpoint will try to serve it like a static file
+
+
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
@@ -72,6 +75,17 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
     return response
+
+
+# Configuración SMTP (moved before app.run)
+app.config['MAIL_SERVER'] = 'smtp-relay.brevo.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = '96ae5b002@smtp-brevo.com'
+app.config['MAIL_PASSWORD'] = '3XH809dst1FS2Lk6'
+app.config['MAIL_DEFAULT_SENDER'] = 'newyorkresidences@condoconnect.store'
+
+mail = Mail(app)
 
 
 # this only runs if `$ python src/main.py` is executed
